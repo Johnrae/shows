@@ -1,11 +1,16 @@
 let config = function($stateProvider, $urlRouterProvider) {
     
-  $urlRouterProvider.otherwise('/add');
+  $urlRouterProvider.otherwise('/');
 
   $stateProvider
     .state('root', {
       abstract: true,
       templateUrl: 'templates/layouts.tpl.html'
+    })
+    .state('root.list', {
+      url: '/',
+      controller: 'ListController',
+      templateUrl: 'templates/list.tpl.html'
     })
     .state('root.add', {
       url: '/add',
