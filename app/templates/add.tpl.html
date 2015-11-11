@@ -1,0 +1,10 @@
+<h3>Add a Show</h3>
+
+<form ng-submit="addShow(show)">
+  <input type="text" placeholder="Headliner" ng-model="show.headliner">
+  <input type="text" placeholder="Supporting Acts" ng-model="show.support">
+  <input type="text" placeholder="Flyer URL" ng-model="show.flyer">
+  <input type="date" placeholder="Show Date" ng-model="show.date">
+  <input type="text" placeholder="Starting Time" ng-model="show.time">
+  <button>Post Show</button>
+</form>
