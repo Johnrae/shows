@@ -1,8 +1,13 @@
 import angular from 'angular';
 import 'angular-ui-router';
+
 import config from './config'; 
+
 import AddController from './controllers/add.controller';
 import ListController from './controllers/list.controller';
+
+import ShowService from './services/show.service';
+
 
 
 angular
@@ -19,4 +24,5 @@ angular
   .config(config)
   .controller('AddController', AddController)
   .controller('ListController',ListController)
+  .service('ShowService',ShowService)
 ;

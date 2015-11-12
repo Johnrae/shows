@@ -1,28 +1,13 @@
-let AddShow = function($scope, $http, PARSE) {
+let AddShow = function($scope, ShowService) {
   
-  let url = PARSE.URL + 'classes/shows';
 
-  let Show = function (obj) {
-    this.headliner = obj.headliner;
-    this.support   = obj.support;
-    this.flyer     = obj.flyer;
-    this.venue     = obj.venue;
-    this.descrip   = obj.descrip;
-    this.date      = obj.date;
-    this.time      = obj.time;
-    this.past      = false;
-  };
-
-  $scope.addShow = function(obj) {
-    let s = new Show(obj);
-
-    $http.post(url, s, PARSE.CONFIG).then( (res) => {
+    ShowService.addShow().then( (res) => {
       $scope.show = {};
     });
   };
 
 };
 
-AddShow.$inject = ['$scope','$http', 'PARSE'];
+AddShow.$inject = ['$scope','ShowService'];
 
 export default AddShow;

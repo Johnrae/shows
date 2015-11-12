@@ -68,16 +68,14 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var ListController = function ListController($scope, $http, PARSE) {
+var ListController = function ListController($scope, ShowService) {
 
-  var url = PARSE.URL + 'classes/shows';
-
-  $http.get(url, PARSE.CONFIG).then(function (res) {
+  ShowService.getShows().then(function (res) {
     $scope.shows = res.data.results;
   });
 };
 
-ListController.$inject = ['$scope', '$http', 'PARSE'];
+ListController.$inject = ['$scope', 'ShowService'];
 
 exports['default'] = ListController;
 module.exports = exports['default'];
@@ -105,6 +103,10 @@ var _controllersListController = require('./controllers/list.controller');
 
 var _controllersListController2 = _interopRequireDefault(_controllersListController);
 
+var _servicesShowService = require('./services/show.service');
+
+var _servicesShowService2 = _interopRequireDefault(_servicesShowService);
+
 _angular2['default'].module('app', ['ui.router']).constant('PARSE', {
   URL: 'https://api.parse.com/1/',
   CONFIG: {
@@ -113,9 +115,67 @@ _angular2['default'].module('app', ['ui.router']).constant('PARSE', {
       'X-Parse-REST-API-Key': 'dFRbvNInDdXWwF7r9sOyJbUMjAvGwBQl3yOtSpAR'
     }
   }
-}).config(_config2['default']).controller('AddController', _controllersAddController2['default']).controller('ListController', _controllersListController2['default']);
+}).config(_config2['default']).controller('AddController', _controllersAddController2['default']).controller('ListController', _controllersListController2['default']).service('ShowService', _servicesShowService2['default']);
 
-},{"./config":1,"./controllers/add.controller":2,"./controllers/list.controller":3,"angular":7,"angular-ui-router":5}],5:[function(require,module,exports){
+},{"./config":1,"./controllers/add.controller":2,"./controllers/list.controller":3,"./services/show.service":5,"angular":8,"angular-ui-router":6}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var ShowService = function ShowService($http, PARSE) {
+
+  var url = PARSE.URL + 'classes/shows';
+
+  this.getShows = function () {
+    return $http({
+      url: url,
+      headers: PARSE.CONFIG.headers,
+      method: 'GET',
+      cache: true
+    });
+  };
+
+  this.getOneShow = function () {
+    return $http({
+      url: url + '/' + showId,
+      headers: PARSE.CONFIG.headers,
+      method: 'GET',
+      cache: true
+    });
+  };
+
+  var Show = function Show(obj) {
+    this.headliner = obj.headliner;
+    this.support = obj.support;
+    this.flyer = obj.flyer;
+    this.venue = obj.venue;
+    this.descrip = obj.descrip;
+    this.date = obj.date;
+    this.time = obj.time;
+    this.past = false;
+  };
+
+  this.addShow = function (obj) {
+    var s = new Show(obj);
+    return $http.post(url, s, PARSE.CONFIG);
+  };
+
+  this.update = function (obj) {
+    return $http.put(url + '/' + obj.objectId, PARSE.CONFIG);
+  };
+
+  this['delete'] = function (obj) {
+    return $http['delete'](url + '/' + obj.objectId, PARSE.CONFIG);
+  };
+};
+
+ShowService.$inject = ['$http', 'PARSE'];
+
+exports['default'] = ShowService;
+module.exports = exports['default'];
+
+},{}],6:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4486,7 +4546,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33391,11 +33451,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":6}]},{},[4])
+},{"./angular":7}]},{},[4])
 
 
 //# sourceMappingURL=main.js.map

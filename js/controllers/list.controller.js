@@ -1,13 +1,11 @@
-let ListController = function($scope, $http, PARSE) {
+let ListController = function($scope,ShowService) {
   
-  let url = PARSE.URL + 'classes/shows';
-
-  $http.get(url, PARSE.CONFIG).then((res) => {
+  ShowService.getShows().then((res) => {
     $scope.shows = res.data.results;
   });
 
 };
 
-ListController.$inject = ['$scope', '$http', 'PARSE'];
+ListController.$inject = ['$scope', 'ShowService'];
 
 export default ListController;
