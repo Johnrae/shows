@@ -1,13 +1,8 @@
-<h2>Shows</h2>
-
-<hr>
 
 <div ng-controller="ListController">
   <div ng-repeat="show in shows">
-    <img src="{{ show.flyer }}">
-    <h3>{{ show.headliner }}</h3>
-    <h5>{{ show.support }}</h5>
-    <span>{{ show.date }} //// {{ show.time }} at {{ show.venue }}</span>
-    <p>{{ show.descrip }}</p>
+    <a href="#/shows/{{ show.objectId }}">
+      <img src="{{ show.flyer }}"> 
+    </a>
   </div>
 </div>

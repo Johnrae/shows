@@ -1,4 +1,4 @@
-let EditController = function($scope,$stateParams, ShowService) {
+let EditController = function($scope,$stateParams, ShowService, $state) {
     
   ShowService.getOneShow($stateParams.showId).then( (res) => {
     $scope.singleShow = res.data;
@@ -6,12 +6,12 @@ let EditController = function($scope,$stateParams, ShowService) {
   
   $scope.updateShow = function (obj) {
     ShowService.update(obj).then( (res) => {
-      console.log(res);
+      $state.go('root.list');
     });
   };
 
 };
 
-EditController.$inject = ['$scope','$stateParams', 'ShowService'];
+EditController.$inject = ['$scope','$stateParams', 'ShowService', '$state'];
 
 export default EditController;

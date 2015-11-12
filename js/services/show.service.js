@@ -12,7 +12,7 @@ let ShowService = function($http, PARSE) {
     });
   };
 
-  this.getOneShow = function() {
+  this.getOneShow = function(showId) {
     return $http({
       url: url + '/' + showId,
       headers: PARSE.CONFIG.headers,
@@ -39,7 +39,7 @@ let ShowService = function($http, PARSE) {
   };
 
   this.update = function(obj) {
-    return $http.put(url + '/' + obj.objectId, PARSE.CONFIG);
+    return $http.put(url + '/' + obj.objectId, obj, PARSE.CONFIG);
   };
 
   this.delete = function(obj) {

@@ -5,6 +5,8 @@ import config from './config'; 
 
 import AddController from './controllers/add.controller';
 import ListController from './controllers/list.controller';
+import SingleController from './controllers/single.controller';
+import EditController from './controllers/edit.controller';
 
 import ShowService from './services/show.service';
 
@@ -24,5 +26,7 @@ angular
   .config(config)
   .controller('AddController', AddController)
   .controller('ListController',ListController)
+  .controller('SingleController', SingleController)
+  .controller('EditController', EditController)
   .service('ShowService',ShowService)
 ;

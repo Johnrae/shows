@@ -1,0 +1,14 @@
+<div>
+  <div>
+    <h3>{{ show.headliner }}</h3>
+    <span>with</span>
+    <h5>{{ show.support }}</h5>
+    <img src="{{ show.flyer }}"> 
+    <span>{{ show.date }} //// {{ show.time }} at {{ show.venue }}</span>
+    <p>{{ show.descrip }}</p>
+  </div>
+  <a href="#/edit/{{ show.objectId }}">
+    <button>Edit</button>
+  </a>
+  <button>Delete</button>
+</div>

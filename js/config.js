@@ -17,6 +17,16 @@ let config = function($stateProvider, $urlRouterProvider) {
       controller: 'AddController',
       templateUrl: 'templates/add.tpl.html'
     })
+    .state('root.single', {
+      url: '/shows/:showId',
+      controller: 'SingleController',
+      templateUrl: 'templates/single.tpl.html'
+    })
+    .state('root.edit', {
+      url: '/edit/:showId',
+      controller: 'EditController',
+      templateUrl: 'templates/edit.tpl.html'
+    })
   ;
   
 };

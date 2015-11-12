@@ -1,7 +1,8 @@
 let AddShow = function($scope, ShowService) {
   
 
-    ShowService.addShow().then( (res) => {
+  $scope.addShow = (obj) => {
+    ShowService.addShow(obj).then( (res) => {
       $scope.show = {};
     });
   };

@@ -19,6 +19,14 @@ var config = function config($stateProvider, $urlRouterProvider) {
     url: '/add',
     controller: 'AddController',
     templateUrl: 'templates/add.tpl.html'
+  }).state('root.single', {
+    url: '/shows/:showId',
+    controller: 'SingleController',
+    templateUrl: 'templates/single.tpl.html'
+  }).state('root.edit', {
+    url: '/edit/:showId',
+    controller: 'EditController',
+    templateUrl: 'templates/edit.tpl.html'
   });
 };
 
@@ -33,36 +41,45 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var AddShow = function AddShow($scope, $http, PARSE) {
-
-  var url = PARSE.URL + 'classes/shows';
-
-  var Show = function Show(obj) {
-    this.headliner = obj.headliner;
-    this.support = obj.support;
-    this.flyer = obj.flyer;
-    this.venue = obj.venue;
-    this.descrip = obj.descrip;
-    this.date = obj.date;
-    this.time = obj.time;
-    this.past = false;
-  };
+var AddShow = function AddShow($scope, ShowService) {
 
   $scope.addShow = function (obj) {
-    var s = new Show(obj);
-
-    $http.post(url, s, PARSE.CONFIG).then(function (res) {
+    ShowService.addShow(obj).then(function (res) {
       $scope.show = {};
     });
   };
 };
 
-AddShow.$inject = ['$scope', '$http', 'PARSE'];
+AddShow.$inject = ['$scope', 'ShowService'];
 
 exports['default'] = AddShow;
 module.exports = exports['default'];
 
 },{}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var EditController = function EditController($scope, $stateParams, ShowService, $state) {
+
+  ShowService.getOneShow($stateParams.showId).then(function (res) {
+    $scope.singleShow = res.data;
+  });
+
+  $scope.updateShow = function (obj) {
+    ShowService.update(obj).then(function (res) {
+      $state.go('root.list');
+    });
+  };
+};
+
+EditController.$inject = ['$scope', '$stateParams', 'ShowService', '$state'];
+
+exports['default'] = EditController;
+module.exports = exports['default'];
+
+},{}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -80,7 +97,31 @@ ListController.$inject = ['$scope', 'ShowService'];
 exports['default'] = ListController;
 module.exports = exports['default'];
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var SingleController = function SingleController($scope, $stateParams, ShowService, $state) {
+
+  ShowService.getOneShow($stateParams.showId).then(function (res) {
+    $scope.show = res.data;
+  });
+
+  $scope.deleteMe = function (obj) {
+    ShowService['delete'](obj).then(function (res) {
+      console.log(res);
+      $state.go('root.list');
+    });
+  };
+};
+SingleController.$inject = ['$scope', '$stateParams', 'ShowService', '$state'];
+exports['default'] = SingleController;
+module.exports = exports['default'];
+
+},{}],6:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -103,6 +144,14 @@ var _controllersListController = require('./controllers/list.controller');
 
 var _controllersListController2 = _interopRequireDefault(_controllersListController);
 
+var _controllersSingleController = require('./controllers/single.controller');
+
+var _controllersSingleController2 = _interopRequireDefault(_controllersSingleController);
+
+var _controllersEditController = require('./controllers/edit.controller');
+
+var _controllersEditController2 = _interopRequireDefault(_controllersEditController);
+
 var _servicesShowService = require('./services/show.service');
 
 var _servicesShowService2 = _interopRequireDefault(_servicesShowService);
@@ -115,9 +164,9 @@ _angular2['default'].module('app', ['ui.router']).constant('PARSE', {
       'X-Parse-REST-API-Key': 'dFRbvNInDdXWwF7r9sOyJbUMjAvGwBQl3yOtSpAR'
     }
   }
-}).config(_config2['default']).controller('AddController', _controllersAddController2['default']).controller('ListController', _controllersListController2['default']).service('ShowService', _servicesShowService2['default']);
+}).config(_config2['default']).controller('AddController', _controllersAddController2['default']).controller('ListController', _controllersListController2['default']).controller('SingleController', _controllersSingleController2['default']).controller('EditController', _controllersEditController2['default']).service('ShowService', _servicesShowService2['default']);
 
-},{"./config":1,"./controllers/add.controller":2,"./controllers/list.controller":3,"./services/show.service":5,"angular":8,"angular-ui-router":6}],5:[function(require,module,exports){
+},{"./config":1,"./controllers/add.controller":2,"./controllers/edit.controller":3,"./controllers/list.controller":4,"./controllers/single.controller":5,"./services/show.service":7,"angular":10,"angular-ui-router":8}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -136,7 +185,7 @@ var ShowService = function ShowService($http, PARSE) {
     });
   };
 
-  this.getOneShow = function () {
+  this.getOneShow = function (showId) {
     return $http({
       url: url + '/' + showId,
       headers: PARSE.CONFIG.headers,
@@ -162,7 +211,7 @@ var ShowService = function ShowService($http, PARSE) {
   };
 
   this.update = function (obj) {
-    return $http.put(url + '/' + obj.objectId, PARSE.CONFIG);
+    return $http.put(url + '/' + obj.objectId, obj, PARSE.CONFIG);
   };
 
   this['delete'] = function (obj) {
@@ -175,7 +224,7 @@ ShowService.$inject = ['$http', 'PARSE'];
 exports['default'] = ShowService;
 module.exports = exports['default'];
 
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4546,7 +4595,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33451,11 +33500,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":7}]},{},[4])
+},{"./angular":9}]},{},[6])
 
 
 //# sourceMappingURL=main.js.map
