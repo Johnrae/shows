@@ -1,12 +1,12 @@
 <h3>Edit My Show</h3>
 
 <form ng-submit="updateShow(singleShow)">
-  <input ng-model="singleShow.headliner">
-  <input ng-model="singleShow.support">
-  <input ng-model="singleShow.flyer">
-  <input ng-model="singleShow.venue">
-  <input ng-model="singleShow.descrip">
-  <input ng-model="singleShow.date">
-  <input ng-model="singleShow.time">
+  <label>Headliner: <input ng-model="singleShow.headliner"></label>
+  <label>Support: <input ng-model="singleShow.support"></label>
+  <label>Flyer Url: <input ng-model="singleShow.flyer"></label>
+  <label>Venue: <input ng-model="singleShow.venue"></label>
+  <label>Comments: <input ng-model="singleShow.descrip"></label>
+  <label>Date: <input ng-model="singleShow.date"></label>
+  <label>Time: <input ng-model="singleShow.time"></label>
   <button>Save Show</button>
 </form>

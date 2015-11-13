@@ -6388,10 +6388,35 @@ th.hide-for-touch {
     display: table-cell !important; } }
 
 body {
-  background: #e2ebf3; }
+  background: url(../images/bg.jpg) no-repeat center center fixed;
+  height: auto;
+  color: white; }
+
+h1, h2, h3, h4, h5, span, label {
+  color: white;
+  text-shadow: 1px 1px 2px black; }
 
 .container {
-  width: 600px;
-  margin: 20px auto; }
+  width: 90%;
+  margin: 30px auto; }
+
+form {
+  width: 50%; }
+
+img {
+  box-shadow: 2px 1px 5px black; }
+
+.large-4 {
+  margin-top: 20px;
+  margin-bottom: 20px; }
+
+footer {
+  clear: both;
+  background-color: #333;
+  margin-bottom: 0; }
+  footer small {
+    color: white;
+    margin-bottom: 0;
+    text-align: center; }
 
 /*# sourceMappingURL=main.css.map */

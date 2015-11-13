@@ -8,7 +8,6 @@ let ShowService = function($http, PARSE) {
       url: url,
       headers: PARSE.CONFIG.headers,
       method: 'GET',
-      cache: true
     });
   };
 

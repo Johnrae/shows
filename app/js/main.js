@@ -180,8 +180,7 @@ var ShowService = function ShowService($http, PARSE) {
     return $http({
       url: url,
       headers: PARSE.CONFIG.headers,
-      method: 'GET',
-      cache: true
+      method: 'GET'
     });
   };
 
