@@ -6410,13 +6410,7 @@ img {
   margin-top: 20px;
   margin-bottom: 20px; }
 
-footer {
-  clear: both;
-  background-color: #333;
-  margin-bottom: 0; }
-  footer small {
-    color: white;
-    margin-bottom: 0;
-    text-align: center; }
+.singleflyer {
+  width: 60%; }
 
 /*# sourceMappingURL=main.css.map */
