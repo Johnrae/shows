@@ -1,6 +1,6 @@
 ## Welcome to My Project
 
-> I am your Readme.md file, you should probably update me.
+Hey! I made this app to showcase upcoming events at a local venue. I've yet to implement user login to restrict data access, but hopefully that will be coming soon. Cool.
 
 
 ## Usage
